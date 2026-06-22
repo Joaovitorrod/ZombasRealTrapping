@@ -1,0 +1,6 @@
+version=1
+id=
+title=Zombas — Real Trapping
+description=Adds three craftable primitive trap structures to Project Zomboid Build 42. Dig a Stake Pit to impale zombies and puncture vehicle tires, excavate a deep Hole Trap that sends enemies falling to a generated underground chamber, or plant a Stake Fence to shred anything that crosses it. All damage values and trap toggles are configurable via Mod Options. Fully supported in single-player and multiplayer (server-authoritative).
+visibility=public
+tags=Build 42;Traps;Survival;Crafting

@@ -89,6 +89,19 @@ All values are configurable in the **Mod Options** menu. In multiplayer, the **s
 
 ---
 
+## Installation (Manual)
+
+1. Clone or download this repository
+2. Place the entire `ZombasRealTrapping` folder inside the Workshop content directory:
+   ```
+   C:\Program Files (x86)\Steam\steamapps\common\ProjectZomboid\workshop\content\108600\
+   ```
+3. Launch Project Zomboid → **Mods** → enable **Zombas — Real Trapping**
+
+> The `id` field in `workshop.txt` will be populated automatically after the first Steam Workshop publish via the in-game tool.
+
+---
+
 ## Compatibility
 
 - **Single-player:** fully supported
@@ -100,23 +113,29 @@ All values are configurable in the **Mod Options** menu. In multiplayer, the **s
 ## File Structure
 
 ```
-Zombas/
-├── mod.info
-└── media/
-    ├── scripts/
-    │   ├── items/ZombasItems.txt        — WoodenStake item definition
-    │   └── recipes/ZombasRecipes.txt    — Carve Wooden Stake recipe
-    ├── textures/tiles/                  — Sprite PNGs (placeholder art)
-    └── lua/
-        ├── shared/
-        │   ├── ZombasShared.lua         — Config, constants, shared utilities
-        │   └── Translate/EN/Zombas_EN.txt
-        ├── client/
-        │   ├── ZombasModOptions.lua     — Mod options registration & sync
-        │   ├── ZombasContextMenu.lua    — Right-click menu for all traps
-        │   └── ZombasTimedActions.lua   — Timed actions (dig, place, disarm)
-        └── server/
-            └── ZombasTrapServer.lua     — Trap logic, damage, chamber generation
+ZombasRealTrapping/               — repository root
+├── workshop.txt                  — Steam Workshop metadata
+├── Contents/
+│   └── mods/
+│       └── Zombas/
+│           ├── common/           — shared code between versions (currently empty)
+│           └── 42/               — Build 42 content
+│               ├── mod.info
+│               └── media/
+│                   ├── scripts/
+│                   │   ├── items/ZombasItems.txt        — WoodenStake item definition
+│                   │   └── recipes/ZombasRecipes.txt    — Carve Wooden Stake recipe
+│                   ├── textures/tiles/                  — Sprite PNGs (placeholder art)
+│                   └── lua/
+│                       ├── shared/
+│                       │   ├── ZombasShared.lua         — Config, constants, shared utilities
+│                       │   └── Translate/EN/Zombas_EN.txt
+│                       ├── client/
+│                       │   ├── ZombasModOptions.lua     — Mod options registration & sync
+│                       │   ├── ZombasContextMenu.lua    — Right-click menu for all traps
+│                       │   └── ZombasTimedActions.lua   — Timed actions (dig, place, disarm)
+│                       └── server/
+│                           └── ZombasTrapServer.lua     — Trap logic, damage, chamber generation
 ```
 
 ---
