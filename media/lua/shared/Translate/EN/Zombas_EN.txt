@@ -1,0 +1,27 @@
+VERSION = 1,
+EN = {
+    -- Context menu
+    ContextMenu_Zombas_DigPit       = "Dig Stake Pit",
+    ContextMenu_Zombas_DigHole      = "Dig Pit Trap (Strength 4+)",
+    ContextMenu_Zombas_AddStake     = "Add Wooden Stake (%1/%2)",
+    ContextMenu_Zombas_Conceal      = "Conceal Trap with Hay",
+    ContextMenu_Zombas_DisarmPit    = "Disarm & Fill Pit",
+    ContextMenu_Zombas_PlaceFence   = "Place Stake Fence",
+    ContextMenu_Zombas_FenceNorth   = "North face",
+    ContextMenu_Zombas_FenceWest    = "West face",
+    ContextMenu_Zombas_DisarmFence  = "Remove Stake Fence",
+
+    -- Item names
+    ItemName_Zombas_WoodenStake     = "Wooden Stake",
+
+    -- Recipe
+    Recipe_Zombas_CarveWoodenStake  = "Carve Wooden Stake",
+
+    -- Tooltip / status hints
+    Tooltip_Zombas_PitEmpty         = "Stake pit — unarmed",
+    Tooltip_Zombas_PitArmed         = "Stake pit — %1 stake(s)",
+    Tooltip_Zombas_PitConcealed     = "Looks like hay...",
+    Tooltip_Zombas_Hole             = "Deep pit trap",
+    Tooltip_Zombas_FenceN           = "Stake fence (N)",
+    Tooltip_Zombas_FenceW           = "Stake fence (W)",
+}

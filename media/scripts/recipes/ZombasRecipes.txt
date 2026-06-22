@@ -1,0 +1,18 @@
+module Zombas
+{
+    imports
+    {
+        Base
+    }
+
+    recipe Carve Wooden Stake
+    {
+        keep KnifeFlint/KnifeStone/KnifeChipped,
+        TreeBranch,
+
+        Result:Zombas.WoodenStake,
+        Time:150,
+        Category:Survival,
+        Prop1:TreeBranch,
+    }
+}
