@@ -1,0 +1,79 @@
+version = 1
+tileset
+{
+    file = Zombas_SpikePit_0
+    size = 1,1
+    id = 50000
+    tile
+    {
+        xy = 0,0
+        CustomName = Stake Pit (Empty)
+        floor =
+        exterior =
+    }
+}
+tileset
+{
+    file = Zombas_SpikePit_1
+    size = 1,1
+    id = 50001
+    tile
+    {
+        xy = 0,0
+        CustomName = Stake Pit (1 Stake)
+        floor =
+        exterior =
+    }
+}
+tileset
+{
+    file = Zombas_SpikePit_2
+    size = 1,1
+    id = 50002
+    tile
+    {
+        xy = 0,0
+        CustomName = Stake Pit (2 Stakes)
+        floor =
+        exterior =
+    }
+}
+tileset
+{
+    file = Zombas_SpikePit_3
+    size = 1,1
+    id = 50003
+    tile
+    {
+        xy = 0,0
+        CustomName = Stake Pit (3 Stakes)
+        floor =
+        exterior =
+    }
+}
+tileset
+{
+    file = Zombas_SpikePit_4
+    size = 1,1
+    id = 50004
+    tile
+    {
+        xy = 0,0
+        CustomName = Stake Pit (4 Stakes)
+        floor =
+        exterior =
+    }
+}
+tileset
+{
+    file = Zombas_Hole_0
+    size = 1,1
+    id = 50005
+    tile
+    {
+        xy = 0,0
+        CustomName = Hole Trap
+        floor =
+        exterior =
+    }
+}

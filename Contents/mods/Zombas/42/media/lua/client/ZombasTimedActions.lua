@@ -24,6 +24,18 @@ local function hasItem(player, itemType)
     return player:getInventory():containsTypeRecurse(itemType)
 end
 
+local function setAnim(self, name, value)
+    if self.character and self.character.setAnimVariable then
+        self.character:setAnimVariable(name, value)
+    end
+end
+
+local function setMetabolic(character)
+    if Metabolics and Metabolics.HeavyWork then
+        character:setMetabolicTarget(Metabolics.HeavyWork)
+    end
+end
+
 -- ─── Dig Stake Pit ──────────────────────────────────────────────────────────
 
 ISZombasDigPit = ISBaseTimedAction:derive("ISZombasDigPit")
@@ -39,15 +51,14 @@ end
 
 function ISZombasDigPit:isValid()
     return not Zombas.hasPit(self.square)
-        and hasTool(self.character, "Base.Shovel", "Base.ShovelGardenTrowel")
 end
 
 function ISZombasDigPit:start()
-    self:setAnimVariable("Digging", true)
+    setAnim(self, "Digging", true)
 end
 
 function ISZombasDigPit:update()
-    self.character:setMetabolicTarget(Metabolics.HeavyWork)
+    setMetabolic(self.character)
 end
 
 function ISZombasDigPit:perform()
@@ -59,7 +70,7 @@ function ISZombasDigPit:perform()
 end
 
 function ISZombasDigPit:stop()
-    self:setAnimVariable("Digging", false)
+    setAnim(self, "Digging", false)
     ISBaseTimedAction.stop(self)
 end
 
@@ -78,18 +89,16 @@ end
 
 function ISZombasDigHole:isValid()
     if Zombas.hasHole(self.square) then return false end
-    if not hasTool(self.character, "Base.Shovel") then return false end
-    if (self.character:getStr() or 0) < Zombas.get("HOLE_STRENGTH_REQ") then return false end
     if not Zombas.isDiggableSurface(self.square) then return false end
     return true
 end
 
 function ISZombasDigHole:start()
-    self:setAnimVariable("Digging", true)
+    setAnim(self, "Digging", true)
 end
 
 function ISZombasDigHole:update()
-    self.character:setMetabolicTarget(Metabolics.HeavyWork)
+    setMetabolic(self.character)
 end
 
 function ISZombasDigHole:perform()
@@ -100,11 +109,11 @@ function ISZombasDigHole:perform()
 end
 
 function ISZombasDigHole:stop()
-    self:setAnimVariable("Digging", false)
+    setAnim(self, "Digging", false)
     ISBaseTimedAction.stop(self)
 end
 
--- ─── Add Wooden Stake to Pit ─────────────────────────────────────────────────
+-- ─── Add Spear to Pit ───────────────────────────────────────────────────────
 
 ISZombasAddStake = ISBaseTimedAction:derive("ISZombasAddStake")
 
@@ -121,12 +130,11 @@ function ISZombasAddStake:isValid()
     local md = self.square:getModData()
     if (md[Zombas.MD.STAKES] or 0) >= Zombas.get("MAX_STAKES") then return false end
     if md[Zombas.MD.CONCEALED] then return false end
-    return hasItem(self.character, "Zombas.WoodenStake")
+    return Zombas.countSpears(self.character:getInventory()) > 0
 end
 
 function ISZombasAddStake:perform()
-    local stake = self.character:getInventory():getFirstTypeRecurse("Zombas.WoodenStake")
-    if stake then self.character:getInventory():Remove(stake) end
+    Zombas.removeSpears(self.character:getInventory(), 1)
     sendCmd(self.character, "addStake", self.square)
     ISBaseTimedAction.perform(self)
 end
@@ -170,11 +178,10 @@ end
 
 function ISZombasDisarm:isValid()
     return Zombas.hasPit(self.square)
-        and hasTool(self.character, "Base.Shovel", "Base.ShovelGardenTrowel")
 end
 
 function ISZombasDisarm:start()
-    self:setAnimVariable("Digging", true)
+    setAnim(self, "Digging", true)
 end
 
 function ISZombasDisarm:perform()
@@ -183,7 +190,7 @@ function ISZombasDisarm:perform()
 end
 
 function ISZombasDisarm:stop()
-    self:setAnimVariable("Digging", false)
+    setAnim(self, "Digging", false)
     ISBaseTimedAction.stop(self)
 end
 
@@ -194,7 +201,7 @@ ISZombasPlaceFence = ISBaseTimedAction:derive("ISZombasPlaceFence")
 function ISZombasPlaceFence:new(character, square, dir)
     local o = ISBaseTimedAction.new(self, character)
     o.square     = square
-    o.dir        = dir   -- "N" or "W"
+    o.dir        = dir
     o.stopOnWalk = true
     o.maxTime    = 120
     return o
@@ -203,26 +210,11 @@ end
 function ISZombasPlaceFence:isValid()
     if Zombas.hasFence(self.square) then return false end
     if not Zombas.isDiggableSurface(self.square) then return false end
-    local inv = self.character:getInventory()
-    local count = 0
-    local items = inv:getItemsFromTypeRecurse("Zombas.WoodenStake")
-    if items then count = items:size() end
-    return count >= Zombas.get("MAX_FENCE_STAKES")
+    return Zombas.countSpears(self.character:getInventory()) >= Zombas.get("MAX_FENCE_STAKES")
 end
 
 function ISZombasPlaceFence:perform()
-    -- Consume 5 stakes
-    local inv = self.character:getInventory()
-    local needed = Zombas.get("MAX_FENCE_STAKES")
-    local removed = 0
-    local items = inv:getItemsFromTypeRecurse("Zombas.WoodenStake")
-    if items then
-        for i = 0, items:size() - 1 do
-            if removed >= needed then break end
-            inv:Remove(items:get(i))
-            removed = removed + 1
-        end
-    end
+    Zombas.removeSpears(self.character:getInventory(), Zombas.get("MAX_FENCE_STAKES"))
     sendClientCommand(self.character, "Zombas", "placeFence", {
         x   = self.square:getX(),
         y   = self.square:getY(),

@@ -1,6 +1,6 @@
-name=Zombas - Trap Structures
-id=Zombas_TrapStructures
-description=Adds craftable trap structures to Project Zomboid. Dig stake pits with wooden stakes to damage and immobilize the undead, build stake fences to punish those who cross them, and excavate deep pit traps where zombies fall and stay trapped. Traps affect zombies, survivors, and vehicles alike. All damage values and trap toggles are configurable via Mod Options.
+name=Real Trapping
+id=RealTrapZ
+description=Adds craftable trap structures to Project Zomboid. Dig stake pits to damage and immobilize the undead, build stake fences to punish those who cross them, and excavate deep pit traps where zombies fall and stay trapped. Traps affect zombies, survivors, and vehicles alike. All values are configurable via Sandbox Options.
 url=
 modversion=0.1.0
 pzversion=42

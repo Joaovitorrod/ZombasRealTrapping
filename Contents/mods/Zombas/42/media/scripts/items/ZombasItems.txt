@@ -4,15 +4,4 @@ module Zombas
     {
         Base
     }
-
-    item WoodenStake
-    {
-        DisplayName                 = Wooden Stake,
-        Type                        = Normal,
-        Weight                      = 0.3,
-        Icon                        = WoodenStake,
-        DisplayCategory             = Survival,
-        Tags                        = WoodenStake,
-        WorldStaticModel            = WoodenStake,
-    }
 }

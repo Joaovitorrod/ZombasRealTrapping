@@ -1,0 +1,165 @@
+VERSION = 1,
+
+option RealTrapZ_EnableStakePit
+{
+    type = boolean,
+    default = true,
+    page = RealTrapZ,
+    translation = RealTrapZ_EnableStakePit,
+}
+
+option RealTrapZ_DAMAGE_MIN
+{
+    type = integer,
+    min = 1,
+    max = 100,
+    default = 3,
+    page = RealTrapZ,
+    translation = RealTrapZ_DAMAGE_MIN,
+}
+
+option RealTrapZ_DAMAGE_MAX
+{
+    type = integer,
+    min = 1,
+    max = 200,
+    default = 10,
+    page = RealTrapZ,
+    translation = RealTrapZ_DAMAGE_MAX,
+}
+
+option RealTrapZ_CRIT_CHANCE
+{
+    type = integer,
+    min = 0,
+    max = 100,
+    default = 12,
+    page = RealTrapZ,
+    translation = RealTrapZ_CRIT_CHANCE,
+}
+
+option RealTrapZ_STAKE_BREAK_CHANCE
+{
+    type = integer,
+    min = 0,
+    max = 100,
+    default = 15,
+    page = RealTrapZ,
+    translation = RealTrapZ_STAKE_BREAK_CHANCE,
+}
+
+option RealTrapZ_VEH_DAMAGE_MIN
+{
+    type = integer,
+    min = 1,
+    max = 100,
+    default = 10,
+    page = RealTrapZ,
+    translation = RealTrapZ_VEH_DAMAGE_MIN,
+}
+
+option RealTrapZ_VEH_DAMAGE_MAX
+{
+    type = integer,
+    min = 1,
+    max = 100,
+    default = 30,
+    page = RealTrapZ,
+    translation = RealTrapZ_VEH_DAMAGE_MAX,
+}
+
+option RealTrapZ_VEH_CRIT_CHANCE
+{
+    type = integer,
+    min = 0,
+    max = 100,
+    default = 15,
+    page = RealTrapZ,
+    translation = RealTrapZ_VEH_CRIT_CHANCE,
+}
+
+option RealTrapZ_EnableHoleTrap
+{
+    type = boolean,
+    default = true,
+    page = RealTrapZ,
+    translation = RealTrapZ_EnableHoleTrap,
+}
+
+option RealTrapZ_MaxHoleZombies
+{
+    type = integer,
+    min = 0,
+    max = 100,
+    default = 6,
+    page = RealTrapZ,
+    translation = RealTrapZ_MaxHoleZombies,
+}
+
+option RealTrapZ_HOLE_STRENGTH_REQ
+{
+    type = integer,
+    min = 1,
+    max = 10,
+    default = 4,
+    page = RealTrapZ,
+    translation = RealTrapZ_HOLE_STRENGTH_REQ,
+}
+
+option RealTrapZ_EnableStakeFence
+{
+    type = boolean,
+    default = true,
+    page = RealTrapZ,
+    translation = RealTrapZ_EnableStakeFence,
+}
+
+option RealTrapZ_FENCE_DAMAGE_MIN
+{
+    type = integer,
+    min = 1,
+    max = 100,
+    default = 2,
+    page = RealTrapZ,
+    translation = RealTrapZ_FENCE_DAMAGE_MIN,
+}
+
+option RealTrapZ_FENCE_DAMAGE_MAX
+{
+    type = integer,
+    min = 1,
+    max = 200,
+    default = 8,
+    page = RealTrapZ,
+    translation = RealTrapZ_FENCE_DAMAGE_MAX,
+}
+
+option RealTrapZ_FENCE_CRIT_CHANCE
+{
+    type = integer,
+    min = 0,
+    max = 100,
+    default = 10,
+    page = RealTrapZ,
+    translation = RealTrapZ_FENCE_CRIT_CHANCE,
+}
+
+option RealTrapZ_FENCE_BREAK_CHANCE
+{
+    type = integer,
+    min = 0,
+    max = 100,
+    default = 15,
+    page = RealTrapZ,
+    translation = RealTrapZ_FENCE_BREAK_CHANCE,
+}
+
+option RealTrapZ_MAX_FENCE_STAKES
+{
+    type = integer,
+    min = 1,
+    max = 20,
+    default = 5,
+    page = RealTrapZ,
+    translation = RealTrapZ_MAX_FENCE_STAKES,
+}

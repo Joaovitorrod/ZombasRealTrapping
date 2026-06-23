@@ -1,26 +1,3 @@
-VERSION = 1,
-EN = {
-    -- Context menu
-    ContextMenu_Zombas_DigTrap      = "Dig Trap",
-    ContextMenu_Zombas_DigPit       = "Dig Stake Pit",
-    ContextMenu_Zombas_DigHole      = "Dig Pit Trap (Strength 4+)",
-    ContextMenu_Zombas_AddStake     = "Add Spear (%1/%2)",
-    ContextMenu_Zombas_Conceal      = "Conceal Trap with Hay",
-    ContextMenu_Zombas_DisarmPit    = "Disarm & Fill Pit",
-    ContextMenu_Zombas_PlaceFence   = "Place Stake Fence",
-    ContextMenu_Zombas_FenceNorth   = "North face",
-    ContextMenu_Zombas_FenceWest    = "West face",
-    ContextMenu_Zombas_DisarmFence  = "Remove Stake Fence",
-
-    -- Tooltip / status hints
-    Tooltip_Zombas_PitEmpty         = "Stake pit — unarmed",
-    Tooltip_Zombas_PitArmed         = "Stake pit — %1 spear(s)",
-    Tooltip_Zombas_PitConcealed     = "Looks like hay...",
-    Tooltip_Zombas_Hole             = "Deep pit trap",
-    Tooltip_Zombas_FenceN           = "Stake fence (N)",
-    Tooltip_Zombas_FenceW           = "Stake fence (W)",
-}
-
 Sandbox_EN = {
     Sandbox_RealTrapZ = "Real Trapping",
 

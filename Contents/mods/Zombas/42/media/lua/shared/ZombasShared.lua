@@ -56,16 +56,17 @@ Zombas.MD = {
     FENCE_COOLDOWN  = "Zombas.fenceCooldown",
 }
 
--- Sprite names (PNG files in media/textures/tiles/)
+-- Custom mod sprites (registered via media/newtiledefinitions.tiles).
+-- Each single-PNG tileset produces sprite name = filename + "_0".
 Zombas.Sprites = {
-    PIT_EMPTY   = "Zombas_SpikePit_0",
-    PIT_STAKE_1 = "Zombas_SpikePit_1",
-    PIT_STAKE_2 = "Zombas_SpikePit_2",
-    PIT_STAKE_3 = "Zombas_SpikePit_3",
-    PIT_STAKE_4 = "Zombas_SpikePit_4",
-    FENCE_N     = "Zombas_StakeFence_N",
-    FENCE_W     = "Zombas_StakeFence_W",
-    HOLE        = "Zombas_Hole_0",
+    PIT_EMPTY   = "Zombas_SpikePit_0_0",
+    PIT_STAKE_1 = "Zombas_SpikePit_1_0",
+    PIT_STAKE_2 = "Zombas_SpikePit_2_0",
+    PIT_STAKE_3 = "Zombas_SpikePit_3_0",
+    PIT_STAKE_4 = "Zombas_SpikePit_4_0",
+    FENCE_N     = "fencing_01_0",
+    FENCE_W     = "fencing_01_1",
+    HOLE        = "Zombas_Hole_0_0",
 }
 
 -- Floor tile prefixes/patterns valid for digging (dirt, grass, sand)
@@ -78,12 +79,11 @@ Zombas.ValidDigSurfaces = {
     "gravel",
 }
 
--- Read a config value: mod options first, then built-in default
+-- Read a config value: SandboxVars first, then built-in default.
+-- SandboxVars is populated by the game before any Lua runs (client and server).
 function Zombas.get(key)
-    if Zombas.Options and Zombas.Options.get then
-        local v = Zombas.Options.get(key)
-        if v ~= nil then return v end
-    end
+    local v = SandboxVars["RealTrapZ_" .. key]
+    if v ~= nil then return v end
     return Zombas.Config[key]
 end
 
@@ -94,8 +94,7 @@ function Zombas.isDiggableSurface(square)
     if not floor then return false end
     local sprite = floor:getSprite()
     if not sprite then return false end
-    local name = sprite:getName() or ""
-    name = name:lower()
+    local name = tostring(sprite:getName() or ""):lower()
     for _, pattern in ipairs(Zombas.ValidDigSurfaces) do
         if name:find(pattern, 1, true) then return true end
     end
@@ -109,10 +108,12 @@ function Zombas.hasPit(square)
 end
 
 function Zombas.isArmed(square)
+    if not square then return false end
     return (square:getModData()[Zombas.MD.STAKES] or 0) > 0
 end
 
 function Zombas.isConcealed(square)
+    if not square then return false end
     return square:getModData()[Zombas.MD.CONCEALED] == true
 end
 
@@ -153,18 +154,61 @@ function Zombas.getTrapObject(square, tag)
     if not objs then return nil end
     for i = 0, objs:size() - 1 do
         local obj = objs:get(i)
-        if obj:getModData()["Zombas.tag"] == tag then
+        if obj and obj:getModData()["Zombas.tag"] == tag then
             return obj
         end
     end
     return nil
 end
 
--- Update the pit sprite to reflect current stake count
+-- Dig-tool helper (shovel or garden trowel)
+function Zombas.hasDigTool(inv)
+    return inv:containsTypeRecurse("Base.Shovel")
+        or inv:containsTypeRecurse("Base.ShovelGardenTrowel")
+end
+
+-- Spear helpers — detect by type name ("Spear" in the ID) since
+-- getSubCategory() is not available on InventoryItem in B42 Kahlua.
+function Zombas.isSpear(item)
+    if not item then return false end
+    local t = item:getType()
+    if not t then return false end
+    -- Use Java String method since getType() returns a Java String in Kahlua
+    return t:contains("Spear") or t:contains("spear")
+end
+
+function Zombas.countSpears(inv)
+    local items = inv:getItems()
+    local count = 0
+    for i = 0, items:size() - 1 do
+        if Zombas.isSpear(items:get(i)) then count = count + 1 end
+    end
+    return count
+end
+
+function Zombas.removeSpears(inv, count)
+    local items = inv:getItems()
+    local toRemove = {}
+    for i = 0, items:size() - 1 do
+        local item = items:get(i)
+        if Zombas.isSpear(item) then
+            toRemove[#toRemove + 1] = item
+            if #toRemove >= count then break end
+        end
+    end
+    for _, item in ipairs(toRemove) do
+        inv:Remove(item)
+    end
+end
+
+-- Update the pit floor tile to reflect current stake count.
+-- Called after adding a stake or revealing a concealed pit.
 function Zombas.updatePitSprite(square)
-    local obj = Zombas.getTrapObject(square, "pit")
-    if not obj then return end
-    local stakes = square:getModData()[Zombas.MD.STAKES] or 0
+    local md = square:getModData()
+    if md[Zombas.MD.CONCEALED] then return end
+    local floor = square:getFloor()
+    if not floor then return end
+    local stakes = md[Zombas.MD.STAKES] or 0
     local spriteName
     if     stakes == 0 then spriteName = Zombas.Sprites.PIT_EMPTY
     elseif stakes == 1 then spriteName = Zombas.Sprites.PIT_STAKE_1
@@ -173,9 +217,5 @@ function Zombas.updatePitSprite(square)
     else                     spriteName = Zombas.Sprites.PIT_STAKE_4
     end
     local sprite = getSprite(spriteName)
-    if sprite then
-        obj:setSprite(sprite)
-        square:RecalcProperties()
-        square:RecalcAllWithNeighbours(true)
-    end
+    if sprite then floor:setSprite(sprite) end
 end
